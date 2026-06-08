@@ -1,0 +1,138 @@
+{
+  "name": "FounderOS — AI Session Memory",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "founderos-end-session",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "name": "Webhook Trigger",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [250, 300],
+      "webhookId": "founderos-end-session"
+    },
+    {
+      "parameters": {
+        "authentication": "headerAuth",
+        "url": "={{ $env.SUPABASE_URL }}/rest/v1/tasks",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "apikey", "value": "={{ $env.SUPABASE_ANON_KEY }}" },
+            { "name": "Authorization", "value": "=Bearer {{ $env.SUPABASE_ANON_KEY }}" }
+          ]
+        },
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            { "name": "business_id", "value": "=eq.{{ $json.body.business_id }}" },
+            { "name": "status", "value": "in.(in_progress,blocked)" },
+            { "name": "is_hidden", "value": "=eq.false" },
+            { "name": "order", "value": "updated_at.desc" },
+            { "name": "limit", "value": "10" }
+          ]
+        }
+      },
+      "name": "Get Active Tasks from Supabase",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [480, 300]
+    },
+    {
+      "parameters": {
+        "resource": "text",
+        "operation": "message",
+        "modelId": "claude-opus-4-5",
+        "messages": {
+          "values": [
+            {
+              "content": "=You are an AI assistant helping a founder track their work.\n\nBusiness: {{ $('Webhook Trigger').item.json.body.business_name }}\n\nActive/In-Progress Tasks:\n{{ $json.map(t => `- ${t.title} [${t.status}]${t.current_blocker ? ` BLOCKED: ${t.current_blocker}` : ''}`).join('\\n') }}\n\nGenerate a concise session summary (2-3 sentences) and identify:\n1. What's in progress\n2. Any blockers\n3. The single best next action\n\nReturn as JSON:\n{\n  \"summary\": \"...\",\n  \"completed_items\": [],\n  \"pending_items\": [\"task 1\", \"task 2\"],\n  \"blockers\": [\"blocker 1\"],\n  \"next_steps\": [\"step 1\"],\n  \"recommended_action\": \"...\"\n}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "name": "Claude AI — Generate Summary",
+      "type": "n8n-nodes-base.anthropic",
+      "typeVersion": 1,
+      "position": [720, 300]
+    },
+    {
+      "parameters": {
+        "jsCode": "const raw = $input.item.json.content[0].text;\nconst jsonStr = raw.replace(/```json|```/g, '').trim();\nconst parsed = JSON.parse(jsonStr);\nreturn [{ json: parsed }];"
+      },
+      "name": "Parse AI JSON Response",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [960, 300]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $env.FOUNDEROS_APP_URL }}/api/n8n/session",
+        "authentication": "headerAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "=Bearer {{ $env.N8N_WEBHOOK_SECRET }}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            { "name": "business_slug", "value": "={{ $('Webhook Trigger').item.json.body.business_slug }}" },
+            { "name": "summary", "value": "={{ $json.summary }}" },
+            { "name": "completed_items", "value": "={{ $json.completed_items }}" },
+            { "name": "pending_items", "value": "={{ $json.pending_items }}" },
+            { "name": "blockers", "value": "={{ $json.blockers }}" },
+            { "name": "next_steps", "value": "={{ $json.next_steps }}" },
+            { "name": "recommended_action", "value": "={{ $json.recommended_action }}" }
+          ]
+        }
+      },
+      "name": "POST to FounderOS API",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [1200, 300]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ { success: true, message: 'Session saved to FounderOS dashboard' } }}"
+      },
+      "name": "Respond to Webhook",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [1440, 300]
+    }
+  ],
+  "connections": {
+    "Webhook Trigger": {
+      "main": [[ { "node": "Get Active Tasks from Supabase", "type": "main", "index": 0 } ]]
+    },
+    "Get Active Tasks from Supabase": {
+      "main": [[ { "node": "Claude AI — Generate Summary", "type": "main", "index": 0 } ]]
+    },
+    "Claude AI — Generate Summary": {
+      "main": [[ { "node": "Parse AI JSON Response", "type": "main", "index": 0 } ]]
+    },
+    "Parse AI JSON Response": {
+      "main": [[ { "node": "POST to FounderOS API", "type": "main", "index": 0 } ]]
+    },
+    "POST to FounderOS API": {
+      "main": [[ { "node": "Respond to Webhook", "type": "main", "index": 0 } ]]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "meta": {
+    "description": "FounderOS End Session workflow. Triggered by the dashboard 'End Session' button, fetches active tasks, sends to Claude for summarization, saves back to FounderOS. Required env vars: SUPABASE_URL, SUPABASE_ANON_KEY, FOUNDEROS_APP_URL, N8N_WEBHOOK_SECRET"
+  }
+}

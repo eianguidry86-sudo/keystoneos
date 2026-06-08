@@ -1,0 +1,98 @@
+/* app/globals.css */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 240 10% 4%;
+    --foreground: 240 10% 94%;
+    --border: 240 8% 16%;
+    --input: 240 8% 16%;
+    --ring: 248 90% 69%;
+    --radius: 10px;
+    --primary: 248 90% 69%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 240 6% 10%;
+    --secondary-foreground: 240 6% 60%;
+    --muted: 240 6% 10%;
+    --muted-foreground: 240 6% 40%;
+    --accent: 248 90% 69%;
+    --accent-foreground: 0 0% 100%;
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 0 0% 100%;
+  }
+}
+
+@layer base {
+  * { @apply border-border; }
+
+  body {
+    @apply bg-fos-bg text-fos-text;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+
+  /* Custom scrollbar */
+  ::-webkit-scrollbar { width: 4px; height: 4px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb {
+    @apply bg-fos-border2 rounded-sm;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-fos-text3;
+  }
+}
+
+@layer utilities {
+  /* Glassmorphism utility */
+  .glass {
+    @apply bg-fos-bg2/80 backdrop-blur-sm border border-fos-border;
+  }
+
+  /* Domino segment animation */
+  .domino-segment {
+    transform-origin: left center;
+    animation: domino-fill 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  }
+
+  @keyframes domino-fill {
+    from { transform: scaleX(0); opacity: 0; }
+    to   { transform: scaleX(1); opacity: 1; }
+  }
+
+  /* Timeline connector line */
+  .tl-connector {
+    @apply absolute top-1/2 -translate-y-1/2 w-px bg-fos-border2;
+  }
+
+  /* Subtle gradient border */
+  .gradient-border {
+    position: relative;
+  }
+  .gradient-border::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1px;
+    background: linear-gradient(135deg, #6c63ff40, #14b8a640);
+    -webkit-mask:
+      linear-gradient(#fff 0 0) content-box,
+      linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+  }
+
+  /* Status pulse for live indicator */
+  .live-dot {
+    @apply w-1.5 h-1.5 rounded-full bg-green-400;
+    box-shadow: 0 0 8px theme('colors.green.400');
+    animation: pulse-glow 2s ease-in-out infinite;
+  }
+
+  @keyframes pulse-glow {
+    0%, 100% { opacity: 1; box-shadow: 0 0 8px theme('colors.green.400'); }
+    50% { opacity: 0.4; box-shadow: 0 0 4px theme('colors.green.400'); }
+  }
+}
