@@ -1,4 +1,4 @@
-# FounderOS
+# KeystoneOS
 
 AI-Assisted Multi-Business Operating System for solo founders running multiple ventures simultaneously.
 
