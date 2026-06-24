@@ -62,7 +62,7 @@ export async function POST(request: NextRequest) {
 
   const { data, error } = await supabase
     .from('tasks')
-    .insert({ ...parsed.data, category_id: categoryId })
+    .insert({ ...parsed.data, category_id: categoryId } as any)
     .select()
     .single()
 

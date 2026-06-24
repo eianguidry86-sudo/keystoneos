@@ -135,7 +135,7 @@ export async function createTask(input: TaskCreateInput): Promise<Task> {
   const supabase = createServerClient()
   const { data, error } = await supabase
     .from('tasks')
-    .insert(input)
+    .insert(input as any)
     .select()
     .single()
 
@@ -148,7 +148,7 @@ export async function updateTask(input: TaskUpdateInput): Promise<Task> {
   const { id, ...updates } = input
   const { data, error } = await supabase
     .from('tasks')
-    .update({ ...updates, updated_at: new Date().toISOString() })
+    .update({ ...updates, updated_at: new Date().toISOString() } as any)
     .eq('id', id)
     .select()
     .single()
@@ -168,7 +168,7 @@ export async function toggleTaskHidden(taskId: string, hidden: boolean): Promise
   const supabase = createServerClient()
   const { error } = await supabase
     .from('tasks')
-    .update({ is_hidden: hidden })
+    .update({ is_hidden: hidden } as any)
     .eq('id', taskId)
 
   if (error) throw error
@@ -243,7 +243,7 @@ export async function createSessionLog(input: SessionLogCreateInput): Promise<Se
   const supabase = createServerClient()
   const { data, error } = await supabase
     .from('session_logs')
-    .insert(input)
+    .insert(input as any)
     .select()
     .single()
 
@@ -278,7 +278,7 @@ export async function createResource(input: ResourceCreateInput): Promise<Resour
   const supabase = createServerClient()
   const { data, error } = await supabase
     .from('resources')
-    .insert(input)
+    .insert(input as any)
     .select()
     .single()
 
@@ -310,7 +310,7 @@ export async function toggleMilestone(id: string, completed: boolean): Promise<v
   const supabase = createServerClient()
   const { error } = await supabase
     .from('milestones')
-    .update({ is_completed: completed })
+    .update({ is_completed: completed } as any)
     .eq('id', id)
 
   if (error) throw error

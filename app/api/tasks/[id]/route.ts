@@ -29,7 +29,7 @@ export async function PATCH(
   const supabase = createAdminClient()
   const { data, error } = await supabase
     .from('tasks')
-    .update({ ...parsed.data, updated_at: new Date().toISOString() })
+    .update({ ...parsed.data, updated_at: new Date().toISOString() } as any)
     .eq('id', params.id)
     .select()
     .single()

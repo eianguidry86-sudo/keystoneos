@@ -41,7 +41,7 @@ export async function POST(request: NextRequest) {
   const supabase = createAdminClient()
   const { data, error } = await supabase
     .from('resources')
-    .insert(parsed.data)
+    .insert(parsed.data as any)
     .select()
     .single()
 

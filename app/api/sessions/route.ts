@@ -53,7 +53,7 @@ export async function POST(request: NextRequest) {
       .select('id')
       .eq('is_active', true)
 
-    const inserts = (businesses ?? []).map((b) => ({
+    const inserts = ((businesses as any[]) ?? []).map((b) => ({
       business_id: b.id,
       ai_source,
       raw_input,
@@ -62,7 +62,7 @@ export async function POST(request: NextRequest) {
 
     const { data, error } = await supabase
       .from('session_logs')
-      .insert(inserts)
+      .insert(inserts as any)
       .select('*, business:businesses(name, slug, color, icon)')
 
     if (error) return NextResponse.json({ error: error.message }, { status: 500 })
@@ -76,7 +76,7 @@ export async function POST(request: NextRequest) {
       ai_source,
       raw_input,
       ...structured,
-    })
+    } as any)
     .select('*, business:businesses(name, slug, color, icon)')
     .single()
 
