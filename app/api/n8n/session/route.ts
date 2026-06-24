@@ -39,7 +39,7 @@ export async function POST(request: NextRequest) {
     .from('businesses')
     .select('id')
     .eq('slug', parsed.data.business_slug)
-    .single()
+    .single() as any
 
   if (!biz) {
     return NextResponse.json({ error: 'Business not found' }, { status: 404 })
@@ -56,7 +56,7 @@ export async function POST(request: NextRequest) {
       blockers: parsed.data.blockers,
       next_steps: parsed.data.next_steps,
       recommended_action: parsed.data.recommended_action ?? null,
-    })
+    } as any)
     .select()
     .single()
 
