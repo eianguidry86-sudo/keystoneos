@@ -44,6 +44,7 @@ export function AppShell({ businesses, children }: AppShellProps) {
 
   const fundBiz = businesses.find((b) => b.slug === 'fundamentals')
   const mmapBiz = businesses.find((b) => b.slug === 'marketmap')
+  const ksBiz = businesses.find((b) => b.slug === 'keystoneos')
 
   return (
     <div className="flex h-screen overflow-hidden bg-fos-bg">
@@ -105,6 +106,21 @@ export function AppShell({ businesses, children }: AppShellProps) {
                 active={pathname === item.href}
                 collapsed={collapsed}
                 dotColor={mmapBiz.color}
+              />
+            ))}
+          </NavSection>
+        )}
+
+        {/* KeystoneOS nav */}
+        {ksBiz && (
+          <NavSection label={collapsed ? '🔑' : 'KeystoneOS'} collapsed={collapsed}>
+            {bizNav(ksBiz.slug).map((item) => (
+              <NavLink
+                key={item.href}
+                item={item}
+                active={pathname === item.href}
+                collapsed={collapsed}
+                dotColor={ksBiz.color}
               />
             ))}
           </NavSection>

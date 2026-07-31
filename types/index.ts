@@ -3,7 +3,7 @@
 // Mirrors the Supabase PostgreSQL schema 1:1
 // ─────────────────────────────────────────────
 
-export type BusinessSlug = 'fundamentals' | 'marketmap'
+export type BusinessSlug = 'fundamentals' | 'marketmap' | 'keystoneos'
 
 export type TaskStatus =
   | 'not_started'

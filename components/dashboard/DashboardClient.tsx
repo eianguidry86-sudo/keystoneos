@@ -24,6 +24,7 @@ export function DashboardClient({
 }: DashboardClientProps) {
   const fundBiz = stats.businesses.find((b) => b.slug === 'fundamentals')
   const mmapBiz = stats.businesses.find((b) => b.slug === 'marketmap')
+  const ksBiz = stats.businesses.find((b) => b.slug === 'keystoneos')
 
   return (
     <div className="space-y-6 max-w-[1400px]">
@@ -60,6 +61,7 @@ export function DashboardClient({
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
         {fundBiz && <BusinessCard biz={fundBiz} />}
         {mmapBiz && <BusinessCard biz={mmapBiz} />}
+        {ksBiz && <BusinessCard biz={ksBiz} />}
       </div>
 
       {/* ── CRITICAL TASKS + LAST SESSION ───────── */}
@@ -132,6 +134,20 @@ export function DashboardClient({
               </span>
             </div>
             <DominoStack items={MMAP_PROGRESS} />
+          </div>
+        )}
+        {ksBiz && (
+          <div className="bg-fos-bg2 border border-fos-border rounded-xl p-5">
+            <div className="flex items-center justify-between mb-5">
+              <div>
+                <div className="text-xs font-bold text-emerald-400 uppercase tracking-widest">🔑 KeystoneOS</div>
+                <div className="text-[11px] font-mono text-fos-text3 mt-0.5">{ksBiz.task_completed}/{ksBiz.task_total} tasks</div>
+              </div>
+              <span className="text-[11px] font-mono px-2 py-1 rounded-lg bg-emerald-400/10 text-emerald-400 border border-emerald-400/20">
+                {ksBiz.overall_completion}% overall
+              </span>
+            </div>
+            <DominoStack items={KS_PROGRESS} />
           </div>
         )}
       </div>
@@ -231,4 +247,11 @@ const MMAP_PROGRESS = [
   { label: 'Data Infrastructure', percent: 15 },
   { label: 'AI Systems',          percent: 20 },
   { label: 'UX & Product',        percent: 25 },
+]
+
+const KS_PROGRESS = [
+  { label: 'Platform Architecture', percent: 40 },
+  { label: 'Business Logic',        percent: 20 },
+  { label: 'UI/UX Design',          percent: 30 },
+  { label: 'Database Migrations',   percent: 10 },
 ]
