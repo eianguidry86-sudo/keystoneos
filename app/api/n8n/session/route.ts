@@ -1,3 +1,4 @@
+export const dynamic = "force-dynamic";
 // app/api/n8n/session/route.ts
 // Receives POST from n8n workflows to auto-create session logs.
 // Secured with a shared secret token.
@@ -63,3 +64,4 @@ export async function POST(request: NextRequest) {
   if (error) return NextResponse.json({ error: error.message }, { status: 500 })
   return NextResponse.json({ success: true, session: data }, { status: 201 })
 }
+

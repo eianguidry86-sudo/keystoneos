@@ -1,3 +1,4 @@
+export const dynamic = "force-dynamic";
 // app/api/tasks/[id]/route.ts
 import { NextRequest, NextResponse } from 'next/server'
 import { createAdminClient } from '@/lib/supabase/server'
@@ -47,3 +48,4 @@ export async function DELETE(
   if (error) return NextResponse.json({ error: error.message }, { status: 500 })
   return NextResponse.json({ success: true })
 }
+

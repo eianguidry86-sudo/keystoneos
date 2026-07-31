@@ -115,8 +115,8 @@ export function OpsPageClient({
         segments={24}
       />
 
-      {/* ── "Where I Left Off" panel (product only) ─ */}
-      {module === 'product' && latestSession && (
+      {/* ── "Where I Left Off" panel ─ */}
+      {latestSession && (
         <div
           className="rounded-xl p-5 border"
           style={{
