@@ -59,7 +59,7 @@ NEXT_PUBLIC_SUPABASE_URL=https://YOUR_PROJECT.supabase.co
 NEXT_PUBLIC_SUPABASE_ANON_KEY=YOUR_ANON_KEY
 SUPABASE_SERVICE_ROLE_KEY=YOUR_SERVICE_ROLE_KEY
 
-ANTHROPIC_API_KEY=sk-ant-...
+ANTHROPIC_API_KEY=your-anthropic-api-key
 
 N8N_WEBHOOK_URL=https://your-n8n.railway.app/webhook/founderos-end-session
 N8N_WEBHOOK_SECRET=your-random-secret-token
