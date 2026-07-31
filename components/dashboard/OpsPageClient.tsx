@@ -2,7 +2,7 @@
 // components/dashboard/OpsPageClient.tsx
 // Renders the full Backend Ops or Product Dev page for a business.
 
-import { useTransition } from 'react'
+import { useState, useTransition } from 'react'
 import { useRouter } from 'next/navigation'
 import { DominoBar } from '@/components/ui/DominoBar'
 import { TaskList } from '@/components/tasks/TaskCard'
@@ -56,6 +56,23 @@ export function OpsPageClient({
     setNewTaskOpen(true)
   }
 
+  const [isScheduling, setIsScheduling] = useState(false)
+  const handleScheduleTasks = async () => {
+    setIsScheduling(true)
+    try {
+      await fetch('/api/tasks/schedule', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ business_id: business.id })
+      })
+      startTransition(() => router.refresh())
+    } catch (e) {
+      console.error(e)
+    } finally {
+      setIsScheduling(false)
+    }
+  }
+
   return (
     <div className="max-w-[860px] space-y-6">
 
@@ -72,9 +89,16 @@ export function OpsPageClient({
             {blockedCount > 0 && ` · ${blockedCount} blocked`}
           </p>
         </div>
-        <div className="flex gap-2">
+        <div className="flex items-center gap-3">
+          <button
+            onClick={handleScheduleTasks}
+            disabled={isScheduling}
+            className="text-[11px] font-semibold px-3 py-1.5 rounded-lg bg-fos-accent/10 text-fos-accent border border-fos-accent/20 hover:bg-fos-accent/20 transition-colors disabled:opacity-50"
+          >
+            {isScheduling ? 'Scheduling...' : '🗓 Auto-Schedule'}
+          </button>
           <span className={cn(
-            'text-[11px] font-mono px-2.5 py-1 rounded-lg border',
+            'text-[11px] font-mono px-2.5 py-1.5 rounded-lg border',
             completedCount === allTasks.length && allTasks.length > 0
               ? 'text-green-400 bg-green-400/10 border-green-400/30'
               : 'text-fos-text3 bg-fos-bg3 border-fos-border'

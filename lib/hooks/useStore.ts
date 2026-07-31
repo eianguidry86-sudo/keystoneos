@@ -3,7 +3,7 @@
 // Does NOT replace Supabase — just caches UI state and optimistic updates.
 
 import { create } from 'zustand'
-import type { Business, Task, SessionLog } from '@/types'
+import type { Business, Task, SessionLog, UserAvailability, TaskReminder } from '@/types'
 
 interface FounderOSStore {
   // Active business selection
@@ -36,6 +36,12 @@ interface FounderOSStore {
   taskOverrides: Record<string, Partial<Task>>
   setTaskOverride: (id: string, updates: Partial<Task>) => void
   clearTaskOverride: (id: string) => void
+
+  // Productivity Enhancements
+  availabilityStatus: UserAvailability
+  setAvailabilityStatus: (status: UserAvailability) => void
+  pendingReminders: TaskReminder[]
+  setPendingReminders: (reminders: TaskReminder[]) => void
 }
 
 export const useStore = create<FounderOSStore>((set) => ({
@@ -70,4 +76,9 @@ export const useStore = create<FounderOSStore>((set) => ({
       delete next[id]
       return { taskOverrides: next }
     }),
+
+  availabilityStatus: 'available',
+  setAvailabilityStatus: (status) => set({ availabilityStatus: status }),
+  pendingReminders: [],
+  setPendingReminders: (reminders) => set({ pendingReminders: reminders }),
 }))

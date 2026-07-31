@@ -29,6 +29,10 @@ export type SessionModule = 'backend' | 'product'
 
 export type AISource = 'claude' | 'chatgpt' | 'manual' | 'n8n'
 
+export type UserAvailability = 'available' | 'away' | 'do_not_disturb'
+
+export type TaskContext = 'developer' | 'admin' | 'mobile_friendly' | 'general'
+
 // ─── Database Row Types ───────────────────────
 
 export interface Business {
@@ -66,6 +70,10 @@ export interface Task {
   due_date: string | null
   is_hidden: boolean
   sort_order: number
+  task_context: TaskContext
+  estimated_duration_mins: number | null
+  scheduled_start: string | null
+  scheduled_end: string | null
   created_at: string
   updated_at: string
   // Joined
@@ -133,6 +141,18 @@ export interface HiddenTask {
   hidden_at: string
 }
 
+export interface TaskReminder {
+  id: string
+  task_id: string
+  reminder_time: string
+  is_sent: boolean
+  payload: any
+  created_at: string
+  updated_at: string
+  // Joined
+  task?: Task
+}
+
 export interface UserPreferences {
   id: string
   user_id: string
@@ -140,6 +160,7 @@ export interface UserPreferences {
   theme: 'dark' | 'light' | 'system'
   sidebar_collapsed: boolean
   timezone: string
+  availability_status: UserAvailability
   updated_at: string
 }
 
@@ -170,6 +191,10 @@ export interface TaskCreateInput {
   current_blocker?: string
   next_step?: string
   due_date?: string
+  task_context?: TaskContext
+  estimated_duration_mins?: number
+  scheduled_start?: string
+  scheduled_end?: string
 }
 
 export interface TaskUpdateInput extends Partial<TaskCreateInput> {

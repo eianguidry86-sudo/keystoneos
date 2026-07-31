@@ -28,6 +28,15 @@ export function TaskCard({ task, onStatusChange, showCategory, compact }: TaskCa
     startTransition(() => onStatusChange(task.id, next))
   }
 
+  const formatSchedule = (start: string | null, end: string | null) => {
+    if (!start || !end) return null
+    const s = new Date(start)
+    const e = new Date(end)
+    const timeOptions: Intl.DateTimeFormatOptions = { hour: 'numeric', minute: '2-digit' }
+    return `${s.toLocaleDateString(undefined, { month: 'short', day: 'numeric' })} ${s.toLocaleTimeString(undefined, timeOptions)} - ${e.toLocaleTimeString(undefined, timeOptions)}`
+  }
+  const scheduleText = formatSchedule(display.scheduled_start, display.scheduled_end)
+
   return (
     <div
       className={cn(
@@ -80,6 +89,18 @@ export function TaskCard({ task, onStatusChange, showCategory, compact }: TaskCa
             {display.due_date && (
               <span className="text-[10px] font-mono text-fos-text3">
                 Due {display.due_date}
+              </span>
+            )}
+
+            {scheduleText && (
+              <span className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-fos-bg3 text-fos-text2 border border-fos-border flex items-center gap-1">
+                🗓 {scheduleText}
+              </span>
+            )}
+
+            {display.task_context && display.task_context !== 'general' && (
+              <span className="text-[9px] font-bold uppercase tracking-widest px-1.5 py-0.5 rounded bg-blue-500/10 text-blue-400 border border-blue-500/20">
+                {display.task_context.replace('_', ' ')}
               </span>
             )}
           </div>

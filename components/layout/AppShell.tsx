@@ -2,7 +2,7 @@
 // components/layout/AppShell.tsx
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { cn } from '@/lib/utils'
 import { useStore } from '@/lib/hooks/useStore'
 import { EndSessionModal } from '@/components/sessions/EndSessionModal'
@@ -231,6 +231,22 @@ function Topbar({
   onNewTask: () => void
 }) {
   const pathname = usePathname()
+  const { availabilityStatus, setAvailabilityStatus, pendingReminders, setPendingReminders } = useStore()
+  const [showReminders, setShowReminders] = useState(false)
+
+  // Fetch reminders on mount
+  useEffect(() => {
+    fetch('/api/reminders')
+      .then(r => r.json())
+      .then(d => {
+         if (d.reminders) setPendingReminders(d.reminders)
+      })
+      .catch(e => console.error(e))
+  }, [setPendingReminders])
+
+  const toggleAvailability = () => {
+     setAvailabilityStatus(availabilityStatus === 'available' ? 'away' : 'available')
+  }
 
   // Derive human-readable title from pathname
   const segments = pathname.split('/').filter(Boolean)
@@ -239,7 +255,7 @@ function Topbar({
     .replace(/\b\w/g, (l) => l.toUpperCase()) ?? 'Dashboard'
 
   return (
-    <header className="h-14 flex items-center justify-between px-7 border-b border-fos-border bg-fos-bg2 flex-shrink-0">
+    <header className="h-14 flex items-center justify-between px-7 border-b border-fos-border bg-fos-bg2 flex-shrink-0 z-10 relative">
       <div>
         <h1 className="text-sm font-semibold text-fos-text capitalize">{title}</h1>
         <p className="text-[11px] font-mono text-fos-text3 mt-0.5">
@@ -247,11 +263,66 @@ function Topbar({
         </p>
       </div>
 
-      <div className="flex items-center gap-2.5">
-        <div className="flex items-center gap-1.5 text-[11px] text-fos-text3 font-mono mr-1">
-          <span className="live-dot" />
-          Live
+      <div className="flex items-center gap-3">
+        {/* Availability Toggle */}
+        <button
+          onClick={toggleAvailability}
+          className={cn(
+            "flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold transition-colors border",
+            availabilityStatus === 'available' 
+              ? "bg-green-400/10 text-green-400 border-green-400/20 hover:bg-green-400/20"
+              : "bg-amber-400/10 text-amber-400 border-amber-400/20 hover:bg-amber-400/20"
+          )}
+        >
+          <span className="w-2 h-2 rounded-full flex-shrink-0" style={{ backgroundColor: 'currentColor' }} />
+          {availabilityStatus === 'available' ? 'Available' : 'Away'}
+        </button>
+
+        {/* Notifications Bell */}
+        <div className="relative">
+          <button
+            onClick={() => setShowReminders(!showReminders)}
+            className="relative p-1.5 rounded-lg text-fos-text2 hover:text-fos-text hover:bg-fos-bg3 transition-colors"
+          >
+            <span className="text-lg leading-none">🔔</span>
+            {pendingReminders.length > 0 && (
+              <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full border border-fos-bg2" />
+            )}
+          </button>
+          
+          {showReminders && (
+            <div className="absolute right-0 top-full mt-2 w-72 bg-fos-bg border border-fos-border rounded-xl shadow-xl p-3 overflow-hidden">
+              <h3 className="text-xs font-bold uppercase tracking-widest text-fos-text3 mb-2 px-1">Smart Reminders</h3>
+              {pendingReminders.length === 0 ? (
+                <p className="text-xs text-fos-text3 font-mono p-1">No pending reminders.</p>
+              ) : (
+                <div className="space-y-2 max-h-64 overflow-y-auto pr-1">
+                  {pendingReminders.map(r => (
+                    <div key={r.id} className="p-2.5 rounded-lg bg-fos-bg2 border border-fos-border2 text-xs">
+                      <div className="font-semibold text-fos-text mb-1">
+                        {r.task?.title || 'Unknown Task'}
+                      </div>
+                      <div className="text-[11px] text-fos-text3 mb-2">
+                        {new Date(r.reminder_time).toLocaleString()}
+                      </div>
+                      {r.payload?.notes && (
+                        <p className="text-fos-text2 mb-1 line-clamp-2">{r.payload.notes}</p>
+                      )}
+                      {r.payload?.url && (
+                        <a href={r.payload.url} target="_blank" rel="noreferrer" className="text-fos-accent hover:underline block mt-1">
+                          View Resource ↗
+                        </a>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          )}
         </div>
+
+        <div className="w-px h-6 bg-fos-border mx-1" />
+
         <button
           onClick={onEndSession}
           className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-fos-bg3 border border-fos-border text-fos-text2 text-xs font-semibold hover:text-fos-text hover:border-fos-border2 transition-colors"
