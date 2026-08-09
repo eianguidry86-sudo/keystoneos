@@ -1,0 +1,477 @@
+<!DOCTYPE html><html class="dark" lang="en" style=""><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>KeystoneOS - Session Logs</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-container-high": "#23293c",
+                        "tertiary-container": "#a078ff",
+                        "on-background": "#dce1fb",
+                        "inverse-primary": "#494bd6",
+                        "inverse-surface": "#dce1fb",
+                        "surface-container-highest": "#2e3447",
+                        "on-tertiary-container": "#340080",
+                        "surface-container-lowest": "#070d1f",
+                        "on-error": "#690005",
+                        "secondary-fixed-dim": "#4fdbc8",
+                        "surface-bright": "#33394c",
+                        "surface-variant": "#2e3447",
+                        "on-secondary-fixed-variant": "#005048",
+                        "on-secondary": "#003731",
+                        "primary-container": "#8083ff",
+                        "surface": "#0c1324",
+                        "on-tertiary-fixed": "#23005c",
+                        "surface-tint": "#c0c1ff",
+                        "surface-container-low": "#151b2d",
+                        "secondary-container": "#04b4a2",
+                        "error-container": "#93000a",
+                        "on-error-container": "#ffdad6",
+                        "primary": "#c0c1ff",
+                        "on-primary-fixed": "#07006c",
+                        "on-primary-fixed-variant": "#2f2ebe",
+                        "primary-fixed": "#e1e0ff",
+                        "on-secondary-fixed": "#00201c",
+                        "on-surface-variant": "#c7c4d7",
+                        "tertiary": "#d0bcff",
+                        "tertiary-fixed-dim": "#d0bcff",
+                        "on-primary-container": "#0d0096",
+                        "secondary-fixed": "#71f8e4",
+                        "on-tertiary": "#3c0091",
+                        "background": "#0c1324",
+                        "on-surface": "#dce1fb",
+                        "inverse-on-surface": "#2a3043",
+                        "tertiary-fixed": "#e9ddff",
+                        "on-secondary-container": "#003f38",
+                        "primary-fixed-dim": "#c0c1ff",
+                        "on-primary": "#1000a9",
+                        "on-tertiary-fixed-variant": "#5516be",
+                        "surface-dim": "#0c1324",
+                        "surface-container": "#191f31",
+                        "error": "#ffb4ab",
+                        "outline-variant": "#464554",
+                        "outline": "#908fa0",
+                        "secondary": "#4fdbc8"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "md": "16px",
+                        "gutter": "20px",
+                        "base": "4px",
+                        "sm": "8px",
+                        "container-max": "1440px",
+                        "xs": "4px",
+                        "xl": "48px",
+                        "lg": "24px"
+                    },
+                    "fontFamily": {
+                        "headline-md": ["Geist"],
+                        "headline-lg": ["Geist"],
+                        "body-lg": ["Geist"],
+                        "label-md": ["JetBrains Mono"],
+                        "headline-lg-mobile": ["Geist"],
+                        "display-lg": ["Geist"],
+                        "label-sm": ["JetBrains Mono"],
+                        "body-md": ["Geist"]
+                    },
+                    "fontSize": {
+                        "headline-md": ["24px", { "lineHeight": "1.3", "fontWeight": "600" }],
+                        "headline-lg": ["32px", { "lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "600" }],
+                        "body-lg": ["16px", { "lineHeight": "1.6", "fontWeight": "400" }],
+                        "label-md": ["12px", { "lineHeight": "1", "letterSpacing": "0.05em", "fontWeight": "500" }],
+                        "headline-lg-mobile": ["24px", { "lineHeight": "1.2", "fontWeight": "600" }],
+                        "display-lg": ["48px", { "lineHeight": "1.1", "letterSpacing": "-0.04em", "fontWeight": "700" }],
+                        "label-sm": ["10px", { "lineHeight": "1", "fontWeight": "500" }],
+                        "body-md": ["14px", { "lineHeight": "1.5", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<style>
+        /* Base Canvas - Obsidian Background */
+        body {
+            background-color: #020617; /* Canvas Level 0 */
+            color: #dce1fb;
+            font-family: 'Geist', sans-serif;
+            background-image: 
+                radial-gradient(circle at 15% 50%, rgba(99, 102, 241, 0.05), transparent 25%),
+                radial-gradient(circle at 85% 30%, rgba(160, 120, 255, 0.05), transparent 25%);
+            min-height: 100vh;
+        }
+
+        /* Glassmorphism Containers - Level 1 */
+        .glass-panel {
+            background-color: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid;
+            border-image-source: linear-gradient(to bottom right, rgba(255,255,255,0.1), rgba(255,255,255,0.02));
+            border-image-slice: 1;
+            border-radius: 0.75rem; /* xl */
+        }
+        /* Fallback for border-image gradient radius issue in some browsers */
+        .glass-panel-alt {
+            background-color: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-top-color: rgba(255, 255, 255, 0.1);
+            border-left-color: rgba(255, 255, 255, 0.1);
+            border-radius: 0.75rem; /* xl */
+        }
+
+        .glass-panel-interactive {
+            transition: all 0.3s ease;
+        }
+        .glass-panel-interactive:hover {
+            border-top-color: rgba(255, 255, 255, 0.15);
+            border-left-color: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 0 20px rgba(99, 102, 241, 0.1);
+            transform: translateY(-2px);
+        }
+
+        /* Input Fields */
+        .glass-input {
+            background-color: #020617;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            color: #dce1fb;
+            transition: all 0.2s ease;
+        }
+        .glass-input:focus {
+            outline: none;
+            border-color: #c0c1ff; /* primary */
+            box-shadow: inset 0 0 12px rgba(99, 102, 241, 0.1);
+        }
+
+        /* Buttons */
+        .btn-primary {
+            background-color: #c0c1ff;
+            color: #07006c; /* on-primary-fixed */
+            position: relative;
+            overflow: hidden;
+            transition: all 0.2s ease;
+        }
+        .btn-primary::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; height: 50%;
+            background: linear-gradient(to bottom, rgba(255,255,255,0.2), transparent);
+            pointer-events: none;
+        }
+        .btn-primary:hover {
+            background-color: #e1e0ff; /* primary-fixed */
+        }
+        
+        .btn-secondary {
+            background-color: transparent;
+            border: 1px solid #1e293b; /* slate-800 equivalent approx */
+            color: #dce1fb;
+            transition: all 0.2s ease;
+        }
+        .btn-secondary:hover {
+            border-color: #c0c1ff; /* primary */
+            box-shadow: 0 0 10px rgba(192, 193, 255, 0.2);
+        }
+
+        /* Status Pulsing */
+        @keyframes pulse-status {
+            0% { box-shadow: 0 0 0 0 rgba(79, 219, 200, 0.4); }
+            70% { box-shadow: 0 0 0 4px rgba(79, 219, 200, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(79, 219, 200, 0); }
+        }
+        .status-dot-active {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background-color: #4fdbc8; /* secondary/success */
+            animation: pulse-status 2s infinite;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+    </style>
+</head>
+<body class="flex flex-col md:flex-row h-screen overflow-hidden">
+<!-- TopAppBar (Mobile Only based on JSON logic) -->
+<header class="md:hidden w-full h-16 fixed top-0 z-40 bg-surface-dim/50 dark:bg-surface-dim/50 backdrop-blur-md flex justify-between items-center px-lg border-b border-white/5 transition-all duration-300">
+<div class="flex items-center gap-sm">
+<span class="material-symbols-outlined text-primary dark:text-primary-fixed cursor-pointer" data-icon="menu">menu</span>
+<span class="font-headline-md text-headline-md text-on-surface">KeystoneOS</span>
+</div>
+<img alt="User Settings" class="w-8 h-8 rounded-full border border-white/10" data-alt="A small circular avatar of a professional user in a minimalist dark UI setting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB0ekm7ga2x5niXSglgGzL1LSV1tBNqx6r30c_LKGmztWj1WdOE9CnpLJEaGhplGCOiO8qzmOsFXupiBSTAC6c8VmGnUG1pDN0bwhoIR1IBi7DvvVW4KTkfW14AXIbLjtY4OLuWRmfybwIB1htp1NjeNj5RhgFCDUjKNTVsD8vKODWpGQ21JhZAtAQMaCgRpeKqM7LVpPzoVNDNVYzO9oKHUjsnITKCKeMuouwO91irmivO52bOjHKA">
+</header>
+<!-- NavigationDrawer (Desktop) -->
+<aside class="hidden md:flex w-72 h-full fixed left-0 top-0 bg-surface-container/80 dark:bg-surface-container/80 backdrop-blur-xl border-r border-white/10 shadow-xl flex-col p-md gap-sm z-30">
+<!-- Header -->
+<div class="flex items-center gap-md mb-lg px-md">
+<img alt="KeystoneOS Logo" class="w-12 h-12 object-contain" data-alt="KeystoneOS high-tech logo featuring geometric shapes and neon glowing accents against a dark obsidian background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB-7YHJKimeYX7z1k33p0kBTePskdjvL5X4V2iqna112LkZU-FlHlf77tR7IePIpqxEv55kZf2QmP6s9CCDxC2xQC_34ktCMhvOl_4tWZAQDbwtPSbyn72EFFlLHoHKs4r1UmnSRTw2xEfWAd8V5iQbCppxqjlHGfiScvQbGrWh6Q3WhE1xuwtMEln7oTZJK-dCXyBMElfPy1bRpVS9vy9OhLfx16NjHBiXQPGosCyO12SOQrihV5RuwWXl6uKtKWXo6Q">
+<div>
+<h1 class="font-headline-md text-headline-md font-bold text-on-surface dark:text-on-surface">KeystoneOS</h1>
+<p class="font-label-sm text-label-sm text-secondary-fixed-dim">v2.4.1</p>
+</div>
+</div>
+<!-- Navigation Links -->
+<nav class="flex-1 flex flex-col gap-sm">
+<!-- Inactive -->
+<a class="flex items-center gap-md px-md py-sm rounded-lg text-on-surface-variant dark:text-on-surface-variant hover:bg-white/5 transition-colors scale-98 active:scale-95 duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span class="font-body-md text-body-md">Dashboard</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm rounded-lg text-on-surface-variant dark:text-on-surface-variant hover:bg-white/5 transition-colors scale-98 active:scale-95 duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="timeline">timeline</span>
+<span class="font-body-md text-body-md">Timeline</span>
+</a>
+<!-- Active -->
+<a class="flex items-center gap-md px-md py-sm rounded-lg text-primary dark:text-primary-fixed bg-primary/10 border-r-2 border-primary scale-98 active:scale-95 duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="execution">stream</span>
+<span class="font-body-md text-body-md font-medium">Sessions</span>
+</a>
+<!-- Inactive -->
+<a class="flex items-center gap-md px-md py-sm rounded-lg text-on-surface-variant dark:text-on-surface-variant hover:bg-white/5 transition-colors scale-98 active:scale-95 duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="folder_open">folder_open</span>
+<span class="font-body-md text-body-md">Resources</span>
+</a>
+
+<a class="flex items-center gap-md px-md py-sm rounded-lg text-on-surface-variant dark:text-on-surface-variant hover:bg-white/5 transition-colors scale-98 active:scale-95 duration-200" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-body-md text-body-md">Settings</span>
+</a><a class="flex items-center gap-md px-md py-sm rounded-lg text-on-surface-variant dark:text-on-surface-variant hover:bg-white/5 transition-colors scale-98 active:scale-95 duration-200" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-body-md text-body-md">Settings</span>
+</a><a class="flex items-center gap-md px-md py-sm rounded-lg text-on-surface-variant dark:text-on-surface-variant hover:bg-white/5 transition-colors scale-98 active:scale-95 duration-200" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-body-md text-body-md">Settings</span>
+</a></nav>
+<!-- Footer Profile -->
+<div class="mt-auto pt-md border-t border-white/5">
+<div class="flex items-center gap-md p-sm rounded-lg hover:bg-white/5 cursor-pointer transition-colors px-md">
+<img alt="User Profile Avatar" class="w-10 h-10 rounded-full bg-surface-container" data-alt="A small circular avatar of a professional user in a minimalist dark UI setting, displaying a subtle tech-savvy aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAwQc-tTuhxRK5jsP-raWtQQiTQhXbol6GUwSyanl1KBhJtt4LswVmwOcl9IbkP1W8Q9uTxzSXE_wrZh86lF0W6ReIZYE0nUxYkVGeuhNaYTR4prp6BRZyQtq97JozJXTRnoXBAuC17v2C7jzPM-swVPFRvqmSZor7qImldgu0Js4crmPRp7CqOxUzd3X09L2_-pwyy88Wb5C9iNpy_cJLMrZXtWoRh77lh_5mOH3ES6q1zHlk-AObk">
+<div class="flex-1 overflow-hidden">
+<p class="font-body-md text-body-md text-on-surface truncate">KeystoneOS</p>
+<p class="font-label-sm text-label-sm text-on-surface-variant truncate">Enterprise Admin</p>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant text-sm">unfold_more</span>
+</div>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="flex-1 md:ml-72 pt-16 md:pt-0 h-full overflow-y-auto pb-24 md:pb-0">
+<!-- Top Action Bar (Desktop context) -->
+<div class="sticky top-0 z-20 bg-background/80 backdrop-blur-xl border-b border-white/5 px-lg py-md flex flex-col md:flex-row md:items-center justify-between gap-md">
+<div>
+<h2 class="font-headline-lg text-headline-lg text-on-surface">Session Logs</h2>
+<p class="font-body-md text-body-md text-on-surface-variant">Manage and review your AI execution history.</p>
+</div>
+<!-- Search & Filters -->
+<div class="flex items-center gap-sm">
+<div class="relative w-full md:w-64">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-sm" data-icon="search">search</span>
+<input class="w-full pl-10 pr-4 py-2 rounded-lg glass-input font-body-md text-body-md" placeholder="Search sessions..." type="text">
+</div>
+<button class="btn-secondary p-2 rounded-lg flex items-center justify-center">
+<span class="material-symbols-outlined text-sm" data-icon="filter_list">filter_list</span>
+</button>
+</div>
+</div>
+<div class="p-lg md:p-xl max-w-container-max mx-auto space-y-lg">
+<!-- Dashboard Highlights (Bento Grid Style) -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-lg">
+<!-- Latest Session Highlight -->
+<div class="glass-panel-alt glass-panel-interactive col-span-1 md:col-span-2 p-lg relative overflow-hidden flex flex-col justify-between">
+<!-- Decorative subtle glow -->
+<div class="absolute -top-24 -right-24 w-48 h-48 bg-primary/20 rounded-full blur-3xl pointer-events-none"></div>
+<div>
+<div class="flex items-center justify-between mb-sm">
+<span class="font-label-md text-label-md text-primary uppercase tracking-wider">Latest Execution</span>
+<div class="flex items-center gap-2">
+<div class="status-dot-active"></div>
+<span class="font-label-sm text-label-sm text-secondary-fixed-dim">Completed 2m ago</span>
+</div>
+</div>
+<h3 class="font-headline-md text-headline-md text-on-surface mb-xs">FUNdamentals Conversion</h3>
+<p class="font-body-md text-body-md text-on-surface-variant max-w-lg mb-md">
+                            Successfully converted 6 Stitch screens to the new React architecture. Processed 42 components with 0 critical errors.
+                        </p>
+<div class="flex gap-sm mb-lg">
+<span class="px-2 py-1 rounded-md bg-secondary-container/10 border border-secondary-container/30 font-label-md text-label-md text-secondary">GPT-4 Turbo</span>
+<span class="px-2 py-1 rounded-md bg-tertiary-container/10 border border-tertiary-container/30 font-label-md text-label-md text-tertiary">14.2k Tokens</span>
+</div>
+</div>
+<div class="flex gap-md">
+<button class="btn-primary px-4 py-2 rounded-lg font-label-md text-label-md">View Details</button>
+<button class="btn-secondary px-4 py-2 rounded-lg font-label-md text-label-md">Resume Context</button>
+</div>
+</div>
+<!-- Continuity Stats Widget -->
+<div class="glass-panel-alt p-lg flex flex-col justify-between">
+<div class="flex items-center gap-sm mb-md">
+<span class="material-symbols-outlined text-tertiary" data-icon="analytics">analytics</span>
+<h3 class="font-body-lg text-body-lg text-on-surface font-medium">Continuity Stats</h3>
+</div>
+<div class="space-y-md">
+<div>
+<p class="font-label-sm text-label-sm text-on-surface-variant uppercase">Total Sessions (30d)</p>
+<p class="font-display-lg text-display-lg text-on-surface">12</p>
+</div>
+<div class="w-full bg-surface-container-highest rounded-full h-2 mb-1">
+<div class="bg-gradient-to-r from-primary to-tertiary h-2 rounded-full" style="width: 65%"></div>
+</div>
+<p class="font-label-sm text-label-sm text-on-surface-variant flex justify-between">
+<span class="">Resource Quota</span>
+<span class="">65% Used</span>
+</p>
+</div>
+</div>
+</div>
+<!-- Session Logs List View -->
+<div class="glass-panel-alt overflow-hidden">
+<div class="px-lg py-md border-b border-white/5 bg-surface-container-lowest/50 flex justify-between items-center">
+<h3 class="font-body-lg text-body-lg text-on-surface font-medium">Session History</h3>
+<button class="text-primary font-label-md text-label-md hover:underline">Export CSV</button>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="border-b border-white/5 bg-surface-container-low/30">
+<th class="px-lg py-sm font-label-md text-label-md text-on-surface-variant font-medium">Session Name</th>
+<th class="px-lg py-sm font-label-md text-label-md text-on-surface-variant font-medium">Model</th>
+<th class="px-lg py-sm font-label-md text-label-md text-on-surface-variant font-medium">Date/Time</th>
+<th class="px-lg py-sm font-label-md text-label-md text-on-surface-variant font-medium">Outcome</th>
+<th class="px-lg py-sm font-label-md text-label-md text-on-surface-variant font-medium text-right">Actions</th>
+</tr>
+</thead>
+<tbody class="font-body-md text-body-md divide-y divide-white/5">
+<!-- Row 1 -->
+<tr class="hover:bg-white/5 transition-colors group">
+<td class="px-lg py-md">
+<div class="flex items-center gap-sm text-on-surface font-medium">
+<span class="material-symbols-outlined text-primary text-sm" data-icon="terminal">terminal</span>
+                                        MarketMap Analysis
+                                    </div>
+</td>
+<td class="px-lg py-md">
+<span class="px-2 py-1 rounded-md bg-surface-bright border border-outline-variant font-label-sm text-label-sm text-on-surface-variant">Claude 3.5 Sonnet</span>
+</td>
+<td class="px-lg py-md text-on-surface-variant text-sm">Jul 24, 14:30</td>
+<td class="px-lg py-md text-on-surface-variant truncate max-w-xs">Generated competitor matrix and identified 3 gap opportunities.</td>
+<td class="px-lg py-md text-right">
+<button class="opacity-0 group-hover:opacity-100 transition-opacity p-2 hover:bg-white/10 rounded-md text-on-surface-variant" title="View Details">
+<span class="material-symbols-outlined text-sm" data-icon="visibility">visibility</span>
+</button>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-white/5 transition-colors group">
+<td class="px-lg py-md">
+<div class="flex items-center gap-sm text-on-surface font-medium">
+<span class="material-symbols-outlined text-primary text-sm" data-icon="code">code</span>
+                                        API Refactor Init
+                                    </div>
+</td>
+<td class="px-lg py-md">
+<span class="px-2 py-1 rounded-md bg-surface-bright border border-outline-variant font-label-sm text-label-sm text-on-surface-variant">GPT-4o</span>
+</td>
+<td class="px-lg py-md text-on-surface-variant text-sm">Jul 23, 09:15</td>
+<td class="px-lg py-md text-on-surface-variant truncate max-w-xs">Scaffolded new GraphQL endpoints for User service.</td>
+<td class="px-lg py-md text-right">
+<button class="opacity-0 group-hover:opacity-100 transition-opacity p-2 hover:bg-white/10 rounded-md text-on-surface-variant" title="View Details">
+<span class="material-symbols-outlined text-sm" data-icon="visibility">visibility</span>
+</button>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-white/5 transition-colors group">
+<td class="px-lg py-md">
+<div class="flex items-center gap-sm text-on-surface font-medium">
+<span class="material-symbols-outlined text-primary text-sm" data-icon="edit_document">edit_document</span>
+                                        Onboarding Copy Revise
+                                    </div>
+</td>
+<td class="px-lg py-md">
+<span class="px-2 py-1 rounded-md bg-surface-bright border border-outline-variant font-label-sm text-label-sm text-on-surface-variant">Claude 3.5 Sonnet</span>
+</td>
+<td class="px-lg py-md text-on-surface-variant text-sm">Jul 21, 16:45</td>
+<td class="px-lg py-md text-on-surface-variant truncate max-w-xs">Drafted 3 variants of welcome email sequence.</td>
+<td class="px-lg py-md text-right">
+<button class="opacity-0 group-hover:opacity-100 transition-opacity p-2 hover:bg-white/10 rounded-md text-on-surface-variant" title="View Details">
+<span class="material-symbols-outlined text-sm" data-icon="visibility">visibility</span>
+</button>
+</td>
+</tr>
+<!-- Row 4 -->
+<tr class="hover:bg-white/5 transition-colors group">
+<td class="px-lg py-md">
+<div class="flex items-center gap-sm text-on-surface font-medium text-error">
+<span class="material-symbols-outlined text-error text-sm" data-icon="warning">warning</span>
+                                        Legacy DB Migration
+                                    </div>
+</td>
+<td class="px-lg py-md">
+<span class="px-2 py-1 rounded-md bg-surface-bright border border-outline-variant font-label-sm text-label-sm text-on-surface-variant">GPT-4 Turbo</span>
+</td>
+<td class="px-lg py-md text-on-surface-variant text-sm">Jul 20, 11:20</td>
+<td class="px-lg py-md text-on-surface-variant truncate max-w-xs text-error/80">Session aborted due to context length limit reached.</td>
+<td class="px-lg py-md text-right">
+<button class="opacity-0 group-hover:opacity-100 transition-opacity p-2 hover:bg-white/10 rounded-md text-on-surface-variant" title="View Details">
+<span class="material-symbols-outlined text-sm" data-icon="visibility">visibility</span>
+</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</main>
+<!-- BottomNavBar (Mobile Only based on JSON logic) -->
+<nav class="md:hidden fixed bottom-0 w-full rounded-t-xl z-50 bg-surface-container-highest/90 dark:bg-surface-container-highest/90 backdrop-blur-2xl border-t border-white/10 shadow-2xl flex justify-around items-center h-20 pb-safe animate-pulse-subtle">
+<a class="flex flex-col items-center justify-center text-on-surface-variant/60 hover:text-on-surface transition-colors active:bg-white/10 rounded-lg p-2" href="#">
+<span class="material-symbols-outlined mb-1" data-icon="home">home</span>
+<span class="font-label-sm text-label-sm">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant/60 hover:text-on-surface transition-colors active:bg-white/10 rounded-lg p-2" href="#">
+<span class="material-symbols-outlined mb-1" data-icon="timeline">timeline</span>
+<span class="font-label-sm text-label-sm">Timeline</span>
+</a>
+<a class="flex flex-col items-center justify-center text-primary dark:text-primary-fixed active:bg-white/10 rounded-lg p-2" href="#">
+<span class="material-symbols-outlined mb-1" data-icon="timer" style="font-variation-settings: 'FILL' 1;">timer</span>
+<span class="font-label-sm text-label-sm">Sessions</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant/60 hover:text-on-surface transition-colors active:bg-white/10 rounded-lg p-2" href="#">
+<span class="material-symbols-outlined mb-1" data-icon="folder">folder</span>
+<span class="font-label-sm text-label-sm">Files</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant/60 hover:text-on-surface transition-colors active:bg-white/10 rounded-lg p-2" href="#">
+<span class="material-symbols-outlined mb-1" data-icon="settings">settings</span>
+<span class="font-label-sm text-label-sm">Settings</span>
+</a>
+</nav>
+
+
+</body></html>

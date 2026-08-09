@@ -1,0 +1,419 @@
+<!DOCTYPE html><html class="dark" lang="en" style=""><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>KeystoneOS - Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;600;700&amp;family=JetBrains+Mono:wght@500&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "surface-container-low": "#151b2d",
+                      "on-secondary": "#003731",
+                      "on-error-container": "#ffdad6",
+                      "surface-tint": "#c0c1ff",
+                      "surface-variant": "#2e3447",
+                      "on-secondary-fixed-variant": "#005048",
+                      "surface-dim": "#0c1324",
+                      "inverse-primary": "#494bd6",
+                      "inverse-surface": "#dce1fb",
+                      "secondary": "#4fdbc8",
+                      "on-tertiary-fixed-variant": "#5516be",
+                      "primary-fixed": "#e1e0ff",
+                      "error-container": "#93000a",
+                      "error": "#ffb4ab",
+                      "tertiary-fixed": "#e9ddff",
+                      "on-tertiary": "#3c0091",
+                      "surface-container-high": "#23293c",
+                      "on-primary-fixed-variant": "#2f2ebe",
+                      "primary-container": "#8083ff",
+                      "outline": "#908fa0",
+                      "on-tertiary-fixed": "#23005c",
+                      "on-primary-container": "#0d0096",
+                      "on-tertiary-container": "#340080",
+                      "tertiary-container": "#a078ff",
+                      "on-error": "#690005",
+                      "secondary-fixed": "#71f8e4",
+                      "secondary-fixed-dim": "#4fdbc8",
+                      "on-primary": "#1000a9",
+                      "inverse-on-surface": "#2a3043",
+                      "surface": "#0c1324",
+                      "on-background": "#dce1fb",
+                      "outline-variant": "#464554",
+                      "secondary-container": "#04b4a2",
+                      "surface-bright": "#33394c",
+                      "tertiary": "#d0bcff",
+                      "primary-fixed-dim": "#c0c1ff",
+                      "primary": "#c0c1ff",
+                      "on-surface-variant": "#c7c4d7",
+                      "on-secondary-container": "#003f38",
+                      "on-surface": "#dce1fb",
+                      "on-primary-fixed": "#07006c",
+                      "background": "#0c1324",
+                      "tertiary-fixed-dim": "#d0bcff",
+                      "surface-container-lowest": "#070d1f",
+                      "surface-container-highest": "#2e3447",
+                      "surface-container": "#191f31",
+                      "on-secondary-fixed": "#00201c"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "lg": "24px",
+                      "gutter": "20px",
+                      "container-max": "1440px",
+                      "md": "16px",
+                      "base": "4px",
+                      "sm": "8px",
+                      "xl": "48px",
+                      "xs": "4px"
+              },
+              "fontFamily": {
+                      "headline-lg-mobile": ["Geist"],
+                      "label-sm": ["JetBrains Mono"],
+                      "body-lg": ["Geist"],
+                      "label-md": ["JetBrains Mono"],
+                      "headline-md": ["Geist"],
+                      "display-lg": ["Geist"],
+                      "headline-lg": ["Geist"],
+                      "body-md": ["Geist"]
+              },
+              "fontSize": {
+                      "headline-lg-mobile": ["24px", {"lineHeight": "1.2", "fontWeight": "600"}],
+                      "label-sm": ["10px", {"lineHeight": "1", "fontWeight": "500"}],
+                      "body-lg": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                      "label-md": ["12px", {"lineHeight": "1", "letterSpacing": "0.05em", "fontWeight": "500"}],
+                      "headline-md": ["24px", {"lineHeight": "1.3", "fontWeight": "600"}],
+                      "display-lg": ["48px", {"lineHeight": "1.1", "letterSpacing": "-0.04em", "fontWeight": "700"}],
+                      "headline-lg": ["32px", {"lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+                      "body-md": ["14px", {"lineHeight": "1.5", "fontWeight": "400"}]
+              }
+            }
+          }
+        }
+    </script>
+<style>
+        body {
+            background-color: #020617;
+            color: #dce1fb;
+            font-family: 'Geist', sans-serif;
+            overflow-x: hidden;
+        }
+
+        .glass-panel {
+            background: rgba(15, 23, 42, 0.4);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid;
+            border-image-source: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.02) 100%);
+            border-image-slice: 1;
+        }
+        
+        .glass-panel-card {
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 0.75rem;
+            transition: all 0.3s ease;
+        }
+        
+        .glass-panel-card:hover {
+            border-color: rgba(99, 102, 241, 0.3);
+            box-shadow: 0 0 20px rgba(99, 102, 241, 0.1);
+            background: rgba(15, 23, 42, 0.8);
+        }
+
+        .glow-active {
+            box-shadow: inset 0 0 12px rgba(99, 102, 241, 0.1);
+            border-color: rgba(192, 193, 255, 0.5) !important;
+        }
+
+        .kanban-col {
+            background: linear-gradient(180deg, rgba(15, 23, 42, 0.3) 0%, rgba(2, 6, 23, 0.8) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.03);
+            border-radius: 1rem;
+        }
+
+        .bg-ambient {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -1;
+            background: 
+                radial-gradient(circle at 20% 30%, rgba(99, 102, 241, 0.15) 0%, transparent 40%),
+                radial-gradient(circle at 80% 70%, rgba(79, 219, 200, 0.1) 0%, transparent 40%);
+            filter: blur(60px);
+        }
+        
+        /* Custom Scrollbar for inner elements */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.1); 
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(255, 255, 255, 0.2); 
+        }
+    </style>
+</head>
+<body class="antialiased min-h-screen flex flex-col md:flex-row overflow-hidden relative">
+<div class="bg-ambient"></div>
+<!-- Top Navigation (Mobile Only) -->
+<header class="md:hidden flex justify-between items-center px-lg h-16 bg-surface-dim/50 backdrop-blur-md border-b border-white/5 w-full fixed top-0 z-40 transition-all duration-300">
+<div class="flex items-center gap-sm">
+<span class="material-symbols-outlined text-primary cursor-pointer">menu</span>
+<span class="font-headline-md text-headline-md text-on-surface">KeystoneOS</span>
+</div>
+<img alt="User Settings" class="w-8 h-8 rounded-full border border-white/10" data-alt="A small circular avatar placeholder showing a generic user profile icon in a dark, minimalist tech style. High quality, crisp lines." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAsCFbirxWgryb7BbQEb5g3phmXFSUZUzV8lXc8uAkxGq48B9wYmL-b1z4F955omA_fM5l5IpezxwsEgD0-5QQ6j8FnQnFwVJkX8-8i95D7tTtUI9ctfEE06-5hP2YVu72qPRrFWgiB4MciMgTIoiFwCurWKdIdVd0m1s_wLNoCLpO-tM3b7EcqvrXNQvKe_-0H8Q9gzIr_H_akLRgkttBDaV7aQ7F053Pf274ANkyrjzPHhCc-tRVY">
+</header>
+<!-- SideNav (Desktop) -->
+<nav class="hidden md:flex flex-col w-72 h-full fixed left-0 top-0 bg-surface-container/80 backdrop-blur-xl border-r border-white/10 shadow-xl p-md gap-sm z-50 transition-all">
+<!-- Brand / Header -->
+<div class="flex flex-col gap-sm mb-lg">
+  <div class="flex flex-col items-start gap-md p-md rounded-xl bg-surface-container/40 backdrop-blur-md"><div class="w-full flex-shrink-0 overflow-hidden mb-2"><img src="https://lh3.googleusercontent.com/aida-public/AB6AXuCCG4gG6QjKRPP4ntD0bJ9S2VXzR-kA8FQsgeSyMuMj_9J3lUXUVbERMnMifpy5nSH6gN8ln2HhZBNZHhpMsO_eV1bnKjgrq9M2GLzSZfbxQOMxA2963fckyrt_pqgZXGo4IaayDoGmZ-uSH5rbVW0mXlp1zWBp1K3S7beDZ1sycFw7wFp6CVuzSfYYjm2p4ysGmunfhE-CK8RA-0YaAGkm-XrZHjX4Ff30sAI0koSOTbrIglct8McaYjWSHyXnbNzEEQ" alt="KeystoneOS Logo" class="w-full h-auto object-contain"></div><span class="font-label-md text-secondary tracking-widest uppercase">Enterprise OS v2.4.0</span></div>
+  
+</div>
+<!-- Navigation Links -->
+<div class="flex flex-col gap-sm flex-1">
+<a class="flex items-center gap-md px-md py-sm rounded-lg text-primary bg-primary/10 border-r-2 border-primary scale-98 active:scale-95 duration-200" href="#">
+<span class="material-symbols-outlined font-variation-settings-'FILL'-1">dashboard</span>
+<span class="font-body-md text-body-md">Dashboard</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm rounded-lg text-on-surface-variant hover:bg-white/5 transition-colors scale-98 active:scale-95 duration-200" href="#">
+<span class="material-symbols-outlined">timeline</span>
+<span class="font-body-md text-body-md">Timeline</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm rounded-lg text-on-surface-variant hover:bg-white/5 transition-colors scale-98 active:scale-95 duration-200" href="#">
+<span class="material-symbols-outlined">stream</span>
+<span class="font-body-md text-body-md">Sessions</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm rounded-lg text-on-surface-variant hover:bg-white/5 transition-colors scale-98 active:scale-95 duration-200" href="#">
+<span class="material-symbols-outlined">folder_open</span>
+<span class="font-body-md text-body-md">Resources</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm rounded-lg text-on-surface-variant hover:bg-white/5 transition-colors scale-98 active:scale-95 duration-200 mt-auto" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-body-md text-body-md">Settings</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm rounded-lg text-on-surface-variant hover:bg-white/5 transition-colors scale-98 active:scale-95 duration-200 mt-auto" href="#"><span class="material-symbols-outlined">settings</span><span class="font-body-md text-body-md">Settings</span></a></div>
+<div class="mt-4 pt-4 border-t border-white/10 flex items-center gap-3 px-md"><img src="https://lh3.googleusercontent.com/aida-public/AB6AXuAsCFbirxWgryb7BbQEb5g3phmXFSUZUzV8lXc8uAkxGq48B9wYmL-b1z4F955omA_fM5l5IpezxwsEgD0-5QQ6j8FnQnFwVJkX8-8i95D7tTtUI9ctfEE06-5hP2YVu72qPRrFWgiB4MciMgTIoiFwCurWKdIdVd0m1s_wLNoCLpO-tM3b7EcqvrXNQvKe_-0H8Q9gzIr_H_akLRgkttBDaV7aQ7F053Pf274ANkyrjzPHhCc-tRVY" alt="User" class="w-8 h-8 rounded-full border border-white/10"><div class="flex-1 min-w-0"><p class="font-label-md text-on-surface truncate">Sarah Jenkins</p><p class="font-label-sm text-on-surface-variant truncate">Product Lead</p></div><span class="material-symbols-outlined text-on-surface-variant">unfold_more</span></div></nav>
+<!-- Main Content Area -->
+<main class="flex-1 md:ml-72 mt-16 md:mt-0 p-4 md:p-lg h-screen overflow-y-auto flex flex-col xl:flex-row gap-lg">
+<!-- Center Column (Kanban & Intro) -->
+<div class="flex-1 flex flex-col gap-lg min-w-0">
+<!-- Header area for center column -->
+<div class="glass-panel p-md md:p-lg rounded-xl flex flex-col md:flex-row justify-between items-start md:items-center gap-md">
+<div>
+<h2 class="font-display-lg text-display-lg text-on-surface mb-2">Kanban Board: Product Roadmap</h2>
+<p class="font-body-md text-body-md text-on-surface-variant flex items-center gap-2">
+<span class="material-symbols-outlined text-sm text-secondary animate-pulse">check_circle</span>
+                        AI Summary: Contract Review is overdue. 3 tasks pending review.
+                    </p>
+</div>
+<div class="relative w-full md:w-64">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant">search</span>
+<input class="w-full bg-surface-container-lowest border border-white/10 rounded-full py-2 pl-10 pr-4 font-body-md text-on-surface placeholder:text-on-surface-variant/50 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary/50 transition-all shadow-inner" placeholder="Search tasks..." type="text">
+</div>
+</div>
+<!-- Kanban Board -->
+<div class="flex-1 grid grid-cols-1 md:grid-cols-3 gap-md overflow-x-auto pb-4">
+<!-- To Do Column -->
+<div class="kanban-col p-sm flex flex-col gap-sm min-w-[280px]">
+<div class="flex justify-between items-center p-sm border-b border-white/5 mb-sm">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">list_alt</span>
+<h3 class="font-headline-md text-headline-md text-on-surface text-lg">To Do</h3>
+<span class="bg-surface-variant text-on-surface-variant font-label-sm px-2 py-0.5 rounded-full">12</span>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant hover:text-white cursor-pointer">more_horiz</span>
+</div>
+<button class="w-full py-2 border border-dashed border-white/20 rounded-lg text-on-surface-variant font-body-md flex items-center justify-center gap-2 hover:bg-white/5 hover:border-white/40 transition-all">
+<span class="material-symbols-outlined text-sm">add</span> Add Task
+                    </button>
+<!-- Task Card -->
+<div class="glass-panel-card p-md cursor-grab active:cursor-grabbing">
+<div class="flex justify-between items-start mb-2">
+<h4 class="font-headline-md text-base text-on-surface font-semibold">Contract Review</h4>
+<span class="material-symbols-outlined text-on-surface-variant text-sm">more_horiz</span>
+</div>
+<div class="flex gap-2 mb-3">
+<span class="font-label-sm px-2 py-1 rounded bg-yellow-500/10 border border-yellow-500/30 text-yellow-200">Legal</span>
+</div>
+<div class="flex justify-between items-center text-on-surface-variant font-body-md text-xs">
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">format_list_bulleted</span>
+                                3 subtasks
+                            </div>
+<div class="flex items-center gap-3">
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">chat_bubble</span> 2</span>
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">attach_file</span> 1</span>
+</div>
+</div>
+</div>
+<!-- Active Task Card -->
+<div class="glass-panel-card p-md cursor-grab active:cursor-grabbing glow-active relative overflow-hidden">
+<div class="absolute top-0 left-0 w-1 h-full bg-primary"></div>
+<div class="flex justify-between items-start mb-2">
+<h4 class="font-headline-md text-base text-on-surface font-semibold">UX Design Mockups</h4>
+<span class="material-symbols-outlined text-on-surface-variant text-sm">more_horiz</span>
+</div>
+<div class="flex gap-2 mb-3">
+<span class="font-label-sm px-2 py-1 rounded bg-blue-500/10 border border-blue-500/30 text-blue-200">Tech</span>
+</div>
+<div class="flex justify-between items-center text-on-surface-variant font-body-md text-xs">
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">format_list_bulleted</span>
+                                3 subtasks
+                            </div>
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">chat_bubble</span> 4
+                            </div>
+</div>
+</div>
+</div>
+<!-- In Progress Column -->
+<div class="kanban-col p-sm flex flex-col gap-sm min-w-[280px]">
+<div class="flex justify-between items-center p-sm border-b border-white/5 mb-sm">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary">schedule</span>
+<h3 class="font-headline-md text-headline-md text-on-surface text-lg">In Progress</h3>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant hover:text-white cursor-pointer">more_horiz</span>
+</div>
+<button class="w-full py-2 border border-dashed border-white/20 rounded-lg text-on-surface-variant font-body-md flex items-center justify-center gap-2 hover:bg-white/5 hover:border-white/40 transition-all">
+<span class="material-symbols-outlined text-sm">add</span> Add Task
+                    </button>
+<!-- Task Card -->
+<div class="glass-panel-card p-md cursor-grab active:cursor-grabbing border-secondary/30 bg-secondary/5">
+<div class="flex justify-between items-start mb-2">
+<h4 class="font-headline-md text-base text-on-surface font-semibold">API Integration</h4>
+<span class="material-symbols-outlined text-on-surface-variant text-sm">more_horiz</span>
+</div>
+<div class="flex gap-2 mb-3">
+<span class="font-label-sm px-2 py-1 rounded bg-blue-500/10 border border-blue-500/30 text-blue-200">Tech</span>
+</div>
+<div class="flex items-center gap-2 mb-3 text-error font-label-md">
+<span class="w-2 h-2 rounded-full bg-error animate-pulse"></span>
+                            High Priority
+                        </div>
+<div class="flex justify-between items-center text-on-surface-variant font-body-md text-xs">
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">check_box</span>
+                                9/15
+                            </div>
+<div class="flex items-center gap-3">
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">chat_bubble</span> 6</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Completed Column -->
+<div class="kanban-col p-sm flex flex-col gap-sm min-w-[280px]">
+<div class="flex justify-between items-center p-sm border-b border-white/5 mb-sm">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-green-400">task_alt</span>
+<h3 class="font-headline-md text-headline-md text-on-surface text-lg opacity-80">Completed</h3>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant hover:text-white cursor-pointer">more_horiz</span>
+</div>
+<!-- Task Card -->
+<div class="glass-panel-card p-md opacity-60 hover:opacity-100 transition-opacity">
+<div class="flex justify-between items-start mb-2">
+<h4 class="font-headline-md text-base text-on-surface font-semibold line-through">Client Feedback</h4>
+<span class="material-symbols-outlined text-on-surface-variant text-sm">more_horiz</span>
+</div>
+<div class="flex gap-2 mb-3">
+<span class="font-label-sm px-2 py-1 rounded bg-yellow-500/10 border border-yellow-500/30 text-yellow-200">Legal</span>
+</div>
+<div class="flex justify-between items-center text-on-surface-variant font-body-md text-xs">
+<div class="flex items-center gap-1 text-green-400">
+<span class="material-symbols-outlined text-[14px]">check</span>
+                                Jul 15
+                            </div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Utility Panel (Desktop only or stacked below on tablet) -->
+<aside class="w-full xl:w-80 flex flex-col gap-lg min-w-[320px]">
+<!-- Document Display Module -->
+<div class="glass-panel rounded-xl flex flex-col overflow-hidden">
+<div class="p-4 border-b border-white/10 bg-surface-container/50">
+<h3 class="font-headline-md text-lg text-on-surface flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">description</span>
+                        Document View
+                    </h3>
+</div>
+<div class="p-4 flex-1 text-sm text-on-surface-variant font-body-md bg-surface-container-low/50 overflow-y-auto max-h-[300px]">
+                   {{DATA:DOCUMENT:DOCUMENT_4}}
+                </div>
+</div>
+<!-- Recent Sessions -->
+<div class="glass-panel rounded-xl p-4 flex flex-col gap-md">
+<h3 class="font-headline-md text-lg text-on-surface flex items-center gap-2 border-b border-white/10 pb-2">
+<span class="material-symbols-outlined text-tertiary">history</span>
+                    Recent Activity
+                </h3>
+<div class="flex flex-col gap-3">
+<div class="flex gap-3 items-start p-2 rounded-lg hover:bg-white/5 transition-colors cursor-pointer">
+<div class="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center text-primary mt-1">
+<span class="material-symbols-outlined text-sm">edit</span>
+</div>
+<div>
+<p class="font-body-md text-sm text-on-surface">Updated UX Design Mockups</p>
+<p class="font-label-sm text-xs text-on-surface-variant mt-1">2 hours ago by Sarah J.</p>
+</div>
+</div>
+<div class="flex gap-3 items-start p-2 rounded-lg hover:bg-white/5 transition-colors cursor-pointer">
+<div class="w-8 h-8 rounded-full bg-secondary/20 flex items-center justify-center text-secondary mt-1">
+<span class="material-symbols-outlined text-sm">upload_file</span>
+</div>
+<div>
+<p class="font-body-md text-sm text-on-surface">Uploaded API Documentation</p>
+<p class="font-label-sm text-xs text-on-surface-variant mt-1">5 hours ago by Mark T.</p>
+</div>
+</div>
+</div>
+</div>
+</aside>
+</main>
+<!-- Bottom Nav (Mobile Only) -->
+<nav class="md:hidden flex justify-around items-center h-20 pb-safe bg-surface-container-highest/90 backdrop-blur-2xl fixed bottom-0 w-full rounded-t-xl z-50 border-t border-white/10 shadow-2xl">
+<a class="flex flex-col items-center justify-center text-on-surface-variant/60 active:bg-white/10 p-2 rounded-lg" href="#">
+<span class="material-symbols-outlined">home</span>
+<span class="font-label-sm text-label-sm mt-1">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant/60 active:bg-white/10 p-2 rounded-lg" href="#">
+<span class="material-symbols-outlined">timeline</span>
+<span class="font-label-sm text-label-sm mt-1">Timeline</span>
+</a>
+<a class="flex flex-col items-center justify-center text-primary dark:text-primary-fixed animate-pulse-subtle p-2 rounded-lg" href="#">
+<span class="material-symbols-outlined font-variation-settings-'FILL'-1">dashboard</span>
+<span class="font-label-sm text-label-sm mt-1">Dashboard</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant/60 active:bg-white/10 p-2 rounded-lg" href="#">
+<span class="material-symbols-outlined">folder</span>
+<span class="font-label-sm text-label-sm mt-1">Files</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant/60 active:bg-white/10 p-2 rounded-lg" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-label-sm text-label-sm mt-1">Settings</span>
+</a>
+</nav>
+
+
+</body></html>

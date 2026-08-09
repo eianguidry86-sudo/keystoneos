@@ -1,7 +1,7 @@
 'use client'
 // components/sessions/SessionCard.tsx
 
-import { cn, formatDateTime } from '@/lib/utils'
+import { cn, formatDateTime, getBusinessLogo } from '@/lib/utils'
 import type { SessionLog } from '@/types'
 
 const SOURCE_STYLES: Record<string, string> = {
@@ -32,7 +32,12 @@ export function SessionCard({ session, compact }: SessionCardProps) {
                 borderColor: `${session.business.color}40`,
               }}
             >
-              {session.business.icon} {compact
+              {getBusinessLogo(session.business.name) ? (
+                <img src={getBusinessLogo(session.business.name)!} alt={`${session.business.name} logo`} className="inline-block w-3 h-3 mr-1 align-middle object-cover rounded-sm" />
+              ) : (
+                <span className="mr-1">{session.business.icon}</span>
+              )}
+              {compact
                 ? session.business.name.split(' ')[0]
                 : session.business.name}
             </span>

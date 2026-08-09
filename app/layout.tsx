@@ -1,25 +1,17 @@
-// app/layout.tsx
 import type { Metadata } from 'next'
-import { Syne, DM_Mono } from 'next/font/google'
+import { JetBrains_Mono } from 'next/font/google'
 import './globals.css'
 import { Providers } from '@/components/layout/Providers'
 
-const syne = Syne({
+const jbMono = JetBrains_Mono({
   subsets: ['latin'],
-  variable: '--font-syne',
-  display: 'swap',
-})
-
-const dmMono = DM_Mono({
-  subsets: ['latin'],
-  weight: ['400', '500'],
-  variable: '--font-dm-mono',
+  variable: '--font-jb-mono',
   display: 'swap',
 })
 
 export const metadata: Metadata = {
-title: 'KeystoneOS — The Operating System for Multi-Venture Founders',
-description: 'The keystone that holds your ventures together. AI-assisted operations, continuity, and execution tracking.',
+  title: 'KeystoneOS — The Operating System for Multi-Venture Founders',
+  description: 'The keystone that holds your ventures together. AI-assisted operations, continuity, and execution tracking.',
   icons: { icon: '/favicon.ico' },
 }
 
@@ -30,7 +22,11 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className="dark">
-      <body className={`${syne.variable} ${dmMono.variable} font-sans bg-fos-bg text-fos-text antialiased`}>
+      <head>
+        <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+        <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;600;700&display=swap" rel="stylesheet" />
+      </head>
+      <body className={`${jbMono.variable} font-sans bg-background text-on-background antialiased`} style={{ backgroundColor: '#0c1324' }}>
         <Providers>{children}</Providers>
       </body>
     </html>

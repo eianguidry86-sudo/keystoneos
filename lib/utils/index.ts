@@ -25,6 +25,14 @@ export function formatDateTime(date: string): string {
   return format(new Date(date), "MMM d · h:mm a")
 }
 
+export function getBusinessLogo(name: string): string | null {
+  if (name.includes('FUNdamentals')) return '/fundamentals-logo.png'
+  if (name.includes('Venture')) return '/venture-logo.png'
+  if (name.includes('Market')) return '/market-logo.png'
+  if (name.includes('Keystone')) return '/keystone-logo.png'
+  return null
+}
+
 // ─── Status helpers ────────────────────────────
 
 export const STATUS_LABELS: Record<TaskStatus, string> = {

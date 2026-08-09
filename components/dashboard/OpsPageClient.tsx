@@ -4,6 +4,7 @@
 
 import { useState, useTransition } from 'react'
 import { useRouter } from 'next/navigation'
+import { getBusinessLogo } from '@/lib/utils'
 import { DominoBar } from '@/components/ui/DominoBar'
 import { TaskList } from '@/components/tasks/TaskCard'
 import { SessionCard } from '@/components/sessions/SessionCard'
@@ -80,7 +81,11 @@ export function OpsPageClient({
       <div className="flex items-start justify-between">
         <div>
           <div className="flex items-center gap-2 mb-1">
-            <span className="text-lg">{business.icon}</span>
+            {getBusinessLogo(business.name) ? (
+              <img src={getBusinessLogo(business.name)!} alt={`${business.name} Logo`} className="w-6 h-6 object-cover rounded-md" />
+            ) : (
+              <span className="text-lg">{business.icon}</span>
+            )}
             <h1 className="text-lg font-bold">{business.name}</h1>
           </div>
           <p className="text-[11px] font-mono text-fos-text3">

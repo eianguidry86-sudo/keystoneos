@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Settings - KeystoneOS</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;600;700&amp;family=JetBrains+Mono:wght@500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-tint": "#c0c1ff",
+                        "background": "#0c1324",
+                        "inverse-surface": "#dce1fb",
+                        "primary-fixed-dim": "#c0c1ff",
+                        "on-primary": "#1000a9",
+                        "on-error-container": "#ffdad6",
+                        "surface-variant": "#2e3447",
+                        "on-secondary": "#003731",
+                        "tertiary": "#d0bcff",
+                        "on-error": "#690005",
+                        "on-tertiary": "#3c0091",
+                        "on-secondary-fixed-variant": "#005048",
+                        "surface-container-high": "#23293c",
+                        "surface-dim": "#0c1324",
+                        "on-primary-fixed-variant": "#2f2ebe",
+                        "tertiary-fixed": "#e9ddff",
+                        "secondary": "#4fdbc8",
+                        "secondary-container": "#04b4a2",
+                        "on-tertiary-container": "#340080",
+                        "surface-container-low": "#151b2d",
+                        "on-primary-fixed": "#07006c",
+                        "error": "#ffb4ab",
+                        "tertiary-fixed-dim": "#d0bcff",
+                        "on-primary-container": "#0d0096",
+                        "surface-container-highest": "#2e3447",
+                        "outline": "#908fa0",
+                        "on-secondary-container": "#003f38",
+                        "inverse-primary": "#494bd6",
+                        "primary-fixed": "#e1e0ff",
+                        "secondary-fixed": "#71f8e4",
+                        "surface-bright": "#33394c",
+                        "on-tertiary-fixed-variant": "#5516be",
+                        "tertiary-container": "#a078ff",
+                        "secondary-fixed-dim": "#4fdbc8",
+                        "inverse-on-surface": "#2a3043",
+                        "on-background": "#dce1fb",
+                        "error-container": "#93000a",
+                        "surface-container-lowest": "#070d1f",
+                        "surface-container": "#191f31",
+                        "surface": "#0c1324",
+                        "on-tertiary-fixed": "#23005c",
+                        "on-secondary-fixed": "#00201c",
+                        "outline-variant": "#464554",
+                        "primary": "#c0c1ff",
+                        "on-surface-variant": "#c7c4d7",
+                        "primary-container": "#8083ff",
+                        "on-surface": "#dce1fb"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "container-max": "1440px",
+                        "md": "16px",
+                        "sm": "8px",
+                        "base": "4px",
+                        "lg": "24px",
+                        "gutter": "20px",
+                        "xs": "4px",
+                        "xl": "48px"
+                    },
+                    "fontFamily": {
+                        "headline-lg": ["Geist"],
+                        "headline-lg-mobile": ["Geist"],
+                        "display-lg": ["Geist"],
+                        "body-md": ["Geist"],
+                        "label-sm": ["JetBrains Mono"],
+                        "label-md": ["JetBrains Mono"],
+                        "headline-md": ["Geist"],
+                        "body-lg": ["Geist"]
+                    },
+                    "fontSize": {
+                        "headline-lg": ["32px", { "lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "600" }],
+                        "headline-lg-mobile": ["24px", { "lineHeight": "1.2", "fontWeight": "600" }],
+                        "display-lg": ["48px", { "lineHeight": "1.1", "letterSpacing": "-0.04em", "fontWeight": "700" }],
+                        "body-md": ["14px", { "lineHeight": "1.5", "fontWeight": "400" }],
+                        "label-sm": ["10px", { "lineHeight": "1", "fontWeight": "500" }],
+                        "label-md": ["12px", { "lineHeight": "1", "letterSpacing": "0.05em", "fontWeight": "500" }],
+                        "headline-md": ["24px", { "lineHeight": "1.3", "fontWeight": "600" }],
+                        "body-lg": ["16px", { "lineHeight": "1.6", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body {
+            background-color: #020617;
+            background-image: radial-gradient(circle at top right, rgba(99, 102, 241, 0.1), transparent 40%),
+                              radial-gradient(circle at bottom left, rgba(79, 219, 200, 0.05), transparent 40%);
+            background-attachment: fixed;
+            color: #dce1fb;
+        }
+
+        .glass-panel {
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid;
+            border-image-source: linear-gradient(to bottom right, rgba(255,255,255,0.1), rgba(255,255,255,0.02));
+            border-image-slice: 1;
+        }
+
+        .glass-panel-focus:focus-within {
+            box-shadow: inset 0 0 12px rgba(99, 102, 241, 0.1);
+            border-image-source: linear-gradient(to bottom right, #c0c1ff, rgba(192,193,255,0.2));
+        }
+
+        .toggle-checkbox:checked {
+            right: 0;
+            border-color: #c0c1ff;
+        }
+        .toggle-checkbox:checked + .toggle-label {
+            background-color: #8083ff;
+        }
+        
+        .nav-item {
+            transition: all 0.2s ease;
+        }
+        .nav-item:hover {
+            background-color: rgba(255, 255, 255, 0.05);
+        }
+        .nav-item:active {
+            transform: scale(0.98);
+        }
+    </style>
+</head>
+<body class="font-body-md text-body-md antialiased min-h-screen flex flex-col md:flex-row overflow-x-hidden selection:bg-primary-container selection:text-on-primary-container">
+<!-- Top App Bar (Mobile) -->
+<header class="md:hidden flex justify-between items-center px-lg w-full h-16 fixed top-0 z-40 bg-surface-dim/50 dark:bg-surface-dim/50 backdrop-blur-md shadow-flat">
+<div class="flex items-center gap-sm">
+<button class="p-sm rounded-full hover:bg-white/5 transition-all duration-300 text-primary dark:text-primary-fixed">
+<span class="material-symbols-outlined">menu</span>
+</button>
+<h1 class="font-headline-md text-headline-md text-on-surface">Settings</h1>
+</div>
+<div class="w-8 h-8 rounded-full bg-surface-variant overflow-hidden border border-white/10">
+<img alt="User Settings" class="w-full h-full object-cover" data-alt="User avatar for KeystoneOS with an indigo background and white initials." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAZG6l7XL4VXEnxbzKNPaJCvZEUMMCLDz15EvwsF9mI8o9cnvZxN8B_SFHaEhdTmZ0TP4IKjp3JagnAmGekX34PAF2XYiVgVfGTXf6ht6W_I0AxI6_5UW-wQgUdf1ZqwuvJQeBKATaPTxhtC5SpMdYSgiemQ9AZ6uC6AnGWfDaSi9bwjZxZcDVsq-oI2jJ8pY-klrAE3OJ3_YV28OJEcx87XcSQY2dGpxbxTEHuTUj0Ii3JgZbeLLtE"/>
+</div>
+</header>
+<!-- Navigation Drawer (Desktop) -->
+<nav class="hidden md:flex flex-col p-md gap-sm bg-surface-container/80 dark:bg-surface-container/80 backdrop-blur-xl w-72 h-full fixed left-0 top-0 border-r border-white/10 shadow-xl z-50">
+<div class="flex items-center gap-md p-md mb-lg">
+<img alt="KeystoneOS Logo" class="w-10 h-10 object-contain" data-alt="A stylized logo featuring wings and a key with the letters KOS, rendered in vibrant blues and purples with a polished, 3D gradient effect." src="https://www.gstatic.com/labs-code/stitch/stitch-placeholder-300x300.svg"/>
+<span class="font-headline-md text-headline-md font-bold text-on-surface dark:text-on-surface">KeystoneOS</span>
+</div>
+<div class="flex flex-col gap-xs flex-grow">
+<!-- Navigation Items -->
+<a class="nav-item flex items-center gap-md px-md py-sm rounded-lg text-on-surface-variant dark:text-on-surface-variant w-full text-left" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span>Dashboard</span>
+</a>
+<a class="nav-item flex items-center gap-md px-md py-sm rounded-lg text-on-surface-variant dark:text-on-surface-variant w-full text-left" href="#">
+<span class="material-symbols-outlined">timeline</span>
+<span>Timeline</span>
+</a>
+<a class="nav-item flex items-center gap-md px-md py-sm rounded-lg text-on-surface-variant dark:text-on-surface-variant w-full text-left" href="#">
+<span class="material-symbols-outlined">stream</span>
+<span>Sessions</span>
+</a>
+<a class="nav-item flex items-center gap-md px-md py-sm rounded-lg text-on-surface-variant dark:text-on-surface-variant w-full text-left" href="#">
+<span class="material-symbols-outlined">folder_open</span>
+<span>Resources</span>
+</a>
+<a class="nav-item flex items-center gap-md px-md py-sm rounded-lg text-primary dark:text-primary-fixed bg-primary/10 border-r-2 border-primary w-full text-left font-semibold" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">settings</span>
+<span>Settings</span>
+</a>
+</div>
+<div class="mt-auto p-md border-t border-white/10 flex items-center gap-md">
+<div class="w-10 h-10 rounded-full bg-surface-variant overflow-hidden flex-shrink-0">
+<img alt="User Profile Avatar" class="w-full h-full object-cover" data-alt="User avatar for KeystoneOS with an indigo background and white initials." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBpa2Nj7g8Gb6_VjC9gqp4ylDMB296dMRe0G724yavWeCCb0Fzr2ZlbBeliZ0ykMKEp-IaWoYOpseQ9U3jWzYBy8pwv3YeY_40blWCUz8gv-5KJWWwuaEeWQtlmE-zlmisJRv7RsBQ4TDbUt9GGEWQYUV3ZORymYn1AzO9wZl3Pk6Uuj1bieKMHVYWG9DwfD1KJKKIaZ4Pb17-8BQfg5xQ_AuR6YWrQpyYdQ2xWrIKO66M4InbyI0ED"/>
+</div>
+<div class="flex flex-col overflow-hidden">
+<span class="font-body-md text-body-md font-semibold text-on-surface truncate">KeystoneOS</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant truncate">Enterprise Admin</span>
+</div>
+</div>
+</nav>
+<!-- Main Content Canvas -->
+<main class="flex-1 md:ml-72 pt-16 md:pt-0 p-4 md:p-lg lg:p-xl flex flex-col gap-lg min-h-screen">
+<header class="hidden md:flex justify-between items-center mb-md">
+<h1 class="font-display-lg text-display-lg text-on-surface">Settings</h1>
+<div class="flex gap-sm">
+<button class="bg-surface-variant text-on-surface px-md py-sm rounded-lg border border-white/5 hover:bg-white/10 transition-colors">Discard</button>
+<button class="bg-primary-container text-on-primary-container px-md py-sm rounded-lg font-semibold hover:opacity-90 transition-opacity" style="box-shadow: inset 0 1px 0 rgba(255,255,255,0.2);">Save Changes</button>
+</div>
+</header>
+<!-- Settings Layout -->
+<div class="flex flex-col lg:flex-row gap-lg">
+<!-- Settings Navigation (Left Column) -->
+<aside class="w-full lg:w-64 flex-shrink-0">
+<nav class="flex flex-row lg:flex-col gap-xs overflow-x-auto lg:overflow-visible pb-sm lg:pb-0">
+<a class="px-md py-sm rounded-lg bg-white/5 text-primary font-semibold flex items-center gap-sm whitespace-nowrap" href="#">
+<span class="material-symbols-outlined">person</span> Profile
+                    </a>
+<a class="px-md py-sm rounded-lg text-on-surface-variant hover:bg-white/5 transition-colors flex items-center gap-sm whitespace-nowrap" href="#">
+<span class="material-symbols-outlined">security</span> Security
+                    </a>
+<a class="px-md py-sm rounded-lg text-on-surface-variant hover:bg-white/5 transition-colors flex items-center gap-sm whitespace-nowrap" href="#">
+<span class="material-symbols-outlined">payments</span> Billing
+                    </a>
+<a class="px-md py-sm rounded-lg text-on-surface-variant hover:bg-white/5 transition-colors flex items-center gap-sm whitespace-nowrap" href="#">
+<span class="material-symbols-outlined">extension</span> Integrations
+                    </a>
+</nav>
+</aside>
+<!-- Settings Content (Right Column) -->
+<div class="flex-1 flex flex-col gap-lg">
+<!-- Profile Section -->
+<section class="glass-panel rounded-xl p-lg flex flex-col gap-md glass-panel-focus">
+<h2 class="font-headline-md text-headline-md text-on-surface border-b border-white/5 pb-sm">Public Profile</h2>
+<div class="flex items-center gap-lg py-sm">
+<div class="relative w-20 h-20 rounded-full bg-surface-variant border-2 border-primary overflow-hidden flex-shrink-0">
+<img alt="Profile Avatar" class="w-full h-full object-cover" data-alt="Large user avatar for KeystoneOS with an indigo background and white initials." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA8-yTRn9mA1M-mMjp3bve_CXVUZs0HO9SDgh2sgoNAEQdzIkjw3wLURUVUWyngSdxVBj5MrKAkkHlsIke2FdV-gy1yE94lnOb0ynaMEojldDd8glOmABl5LfS3rcRKldO2ehrOG0IK1w2vGLuy-qzaRKxiFu6w_3J0qzbDIASKDl3Oa0o693_R_gsI4WlCx7HmXhZOl4-tY2wT3JzjgGVX_zffsH-DTOjvGnlDZbEKNp5Qvq9BkHKc"/>
+<div class="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity cursor-pointer">
+<span class="material-symbols-outlined text-white">photo_camera</span>
+</div>
+</div>
+<div class="flex flex-col gap-sm">
+<button class="bg-surface-variant text-on-surface px-md py-xs rounded-lg border border-white/10 hover:border-primary transition-colors text-sm">Change Avatar</button>
+<span class="text-xs text-on-surface-variant">JPG, GIF or PNG. Max size of 800K</span>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-md mt-sm">
+<div class="flex flex-col gap-xs">
+<label class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">First Name</label>
+<input class="w-full bg-surface-container-low border border-white/5 rounded-lg px-md py-sm text-on-surface focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all" type="text" value="Keystone"/>
+</div>
+<div class="flex flex-col gap-xs">
+<label class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Last Name</label>
+<input class="w-full bg-surface-container-low border border-white/5 rounded-lg px-md py-sm text-on-surface focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all" type="text" value="Admin"/>
+</div>
+<div class="flex flex-col gap-xs md:col-span-2">
+<label class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Email Address</label>
+<input class="w-full bg-surface-container-low border border-white/5 rounded-lg px-md py-sm text-on-surface focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all" type="email" value="admin@keystoneos.dev"/>
+</div>
+<div class="flex flex-col gap-xs md:col-span-2">
+<label class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Bio</label>
+<textarea class="w-full bg-surface-container-low border border-white/5 rounded-lg px-md py-sm text-on-surface focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all resize-none" rows="3">Enterprise system administrator overseeing global deployments.</textarea>
+</div>
+</div>
+</section>
+<!-- Preferences Section -->
+<section class="glass-panel rounded-xl p-lg flex flex-col gap-md glass-panel-focus">
+<h2 class="font-headline-md text-headline-md text-on-surface border-b border-white/5 pb-sm">Preferences</h2>
+<div class="flex flex-col gap-md">
+<!-- Toggle Item -->
+<div class="flex items-center justify-between p-sm hover:bg-white/5 rounded-lg transition-colors">
+<div class="flex flex-col">
+<span class="font-body-lg text-body-lg text-on-surface">Email Notifications</span>
+<span class="font-body-md text-body-md text-on-surface-variant">Receive daily summary emails.</span>
+</div>
+<div class="relative inline-block w-12 mr-2 align-middle select-none transition duration-200 ease-in">
+<input checked="" class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 appearance-none cursor-pointer transition-transform duration-200 ease-in-out z-10 translate-x-6 border-primary-container" id="toggle1" name="toggle" type="checkbox"/>
+<label class="toggle-label block overflow-hidden h-6 rounded-full bg-primary-container cursor-pointer" for="toggle1"></label>
+</div>
+</div>
+<!-- Toggle Item -->
+<div class="flex items-center justify-between p-sm hover:bg-white/5 rounded-lg transition-colors">
+<div class="flex flex-col">
+<span class="font-body-lg text-body-lg text-on-surface">Two-Factor Authentication</span>
+<span class="font-body-md text-body-md text-on-surface-variant">Require 2FA for all sign-ins.</span>
+</div>
+<div class="relative inline-block w-12 mr-2 align-middle select-none transition duration-200 ease-in">
+<input class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-surface-variant border-4 border-surface-container-low appearance-none cursor-pointer transition-transform duration-200 ease-in-out z-10" id="toggle2" name="toggle" type="checkbox"/>
+<label class="toggle-label block overflow-hidden h-6 rounded-full bg-surface-container-low border border-white/10 cursor-pointer" for="toggle2"></label>
+</div>
+</div>
+<!-- Select Dropdown -->
+<div class="flex flex-col gap-xs mt-sm p-sm">
+<label class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Timezone</label>
+<div class="relative">
+<select class="w-full bg-surface-container-low border border-white/5 rounded-lg px-md py-sm text-on-surface appearance-none focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all pr-10">
+<option>(GMT-08:00) Pacific Time</option>
+<option>(GMT-05:00) Eastern Time</option>
+<option>(GMT+00:00) London</option>
+</select>
+<span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-on-surface-variant pointer-events-none">expand_more</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Danger Zone -->
+<section class="glass-panel rounded-xl p-lg flex flex-col gap-md border-error/20 bg-error-container/5">
+<h2 class="font-headline-md text-headline-md text-error border-b border-error/10 pb-sm">Danger Zone</h2>
+<div class="flex items-center justify-between mt-sm">
+<div class="flex flex-col">
+<span class="font-body-lg text-body-lg text-on-surface">Delete Account</span>
+<span class="font-body-md text-body-md text-on-surface-variant">Permanently remove your account and all data.</span>
+</div>
+<button class="px-md py-sm rounded-lg border border-error/50 text-error hover:bg-error/10 transition-colors font-semibold">Delete Account</button>
+</div>
+</section>
+</div>
+</div>
+</main>
+<!-- Bottom Nav Bar (Mobile) -->
+<nav class="md:hidden flex justify-around items-center h-20 pb-safe bg-surface-container-highest/90 dark:bg-surface-container-highest/90 backdrop-blur-2xl fixed bottom-0 w-full rounded-t-xl z-50 border-t border-white/10 shadow-2xl">
+<a class="flex flex-col items-center justify-center text-on-surface-variant/60 active:bg-white/10 w-full h-full" href="#">
+<span class="material-symbols-outlined mb-1">home</span>
+<span class="font-label-sm text-label-sm">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant/60 active:bg-white/10 w-full h-full" href="#">
+<span class="material-symbols-outlined mb-1">timeline</span>
+<span class="font-label-sm text-label-sm">Timeline</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant/60 active:bg-white/10 w-full h-full" href="#">
+<span class="material-symbols-outlined mb-1">timer</span>
+<span class="font-label-sm text-label-sm">Sessions</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant/60 active:bg-white/10 w-full h-full" href="#">
+<span class="material-symbols-outlined mb-1">folder</span>
+<span class="font-label-sm text-label-sm">Files</span>
+</a>
+<a class="flex flex-col items-center justify-center text-primary dark:text-primary-fixed active:bg-white/10 w-full h-full bg-white/5" href="#">
+<span class="material-symbols-outlined mb-1" style="font-variation-settings: 'FILL' 1;">settings</span>
+<span class="font-label-sm text-label-sm">Settings</span>
+</a>
+</nav>
+<script>
+        // Simple toggle logic for the custom switches
+        document.querySelectorAll('input[type="checkbox"]').forEach(toggle => {
+            toggle.addEventListener('change', function() {
+                const label = this.nextElementSibling;
+                if(this.checked) {
+                    this.classList.replace('translate-x-0', 'translate-x-6');
+                    this.classList.replace('border-surface-container-low', 'border-primary-container');
+                    label.classList.replace('bg-surface-container-low', 'bg-primary-container');
+                    label.classList.replace('border-white/10', 'border-transparent');
+                } else {
+                    this.classList.replace('translate-x-6', 'translate-x-0');
+                    this.classList.replace('border-primary-container', 'border-surface-container-low');
+                    label.classList.replace('bg-primary-container', 'bg-surface-container-low');
+                    label.classList.replace('border-transparent', 'border-white/10');
+                }
+            });
+        });
+        
+        // Initialize unchecked toggles properly on load
+        document.querySelectorAll('input[type="checkbox"]:not(:checked)').forEach(toggle => {
+            toggle.classList.add('translate-x-0');
+        });
+    </script>
+</body></html>

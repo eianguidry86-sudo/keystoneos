@@ -1,20 +1,15 @@
-/* app/globals.css */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
   :root {
-    --background: 240 10% 4%;
-    --foreground: 240 10% 94%;
+    /* Retain radius for existing radix components if any */
+    --radius: 10px;
     --border: 240 8% 16%;
     --input: 240 8% 16%;
     --ring: 248 90% 69%;
-    --radius: 10px;
-    --primary: 248 90% 69%;
-    --primary-foreground: 0 0% 100%;
-    --secondary: 240 6% 10%;
-    --secondary-foreground: 240 6% 60%;
+    --foreground: 240 10% 94%;
     --muted: 240 6% 10%;
     --muted-foreground: 240 6% 40%;
     --accent: 248 90% 69%;
@@ -25,10 +20,10 @@
 }
 
 @layer base {
-  * { @apply border-border; }
+  * { @apply border-outline-variant; }
 
   body {
-    @apply bg-fos-bg text-fos-text;
+    @apply bg-background text-on-background;
     font-feature-settings: "rlig" 1, "calt" 1;
   }
 
@@ -36,17 +31,17 @@
   ::-webkit-scrollbar { width: 4px; height: 4px; }
   ::-webkit-scrollbar-track { background: transparent; }
   ::-webkit-scrollbar-thumb {
-    @apply bg-fos-border2 rounded-sm;
+    @apply bg-surface-variant rounded-sm;
   }
   ::-webkit-scrollbar-thumb:hover {
-    @apply bg-fos-text3;
+    @apply bg-surface-bright;
   }
 }
 
 @layer utilities {
   /* Glassmorphism utility */
   .glass {
-    @apply bg-fos-bg2/80 backdrop-blur-sm border border-fos-border;
+    @apply bg-surface-container-low/80 backdrop-blur-sm border border-outline-variant;
   }
 
   /* Domino segment animation */
@@ -62,7 +57,7 @@
 
   /* Timeline connector line */
   .tl-connector {
-    @apply absolute top-1/2 -translate-y-1/2 w-px bg-fos-border2;
+    @apply absolute top-1/2 -translate-y-1/2 w-px bg-outline-variant;
   }
 
   /* Subtle gradient border */
@@ -75,7 +70,7 @@
     inset: 0;
     border-radius: inherit;
     padding: 1px;
-    background: linear-gradient(135deg, #6c63ff40, #14b8a640);
+    background: linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0.02));
     -webkit-mask:
       linear-gradient(#fff 0 0) content-box,
       linear-gradient(#fff 0 0);
@@ -86,13 +81,13 @@
 
   /* Status pulse for live indicator */
   .live-dot {
-    @apply w-1.5 h-1.5 rounded-full bg-green-400;
-    box-shadow: 0 0 8px theme('colors.green.400');
+    @apply w-1.5 h-1.5 rounded-full bg-secondary;
+    box-shadow: 0 0 8px theme('colors.secondary');
     animation: pulse-glow 2s ease-in-out infinite;
   }
 
   @keyframes pulse-glow {
-    0%, 100% { opacity: 1; box-shadow: 0 0 8px theme('colors.green.400'); }
-    50% { opacity: 0.4; box-shadow: 0 0 4px theme('colors.green.400'); }
+    0%, 100% { opacity: 1; box-shadow: 0 0 8px theme('colors.secondary'); }
+    50% { opacity: 0.4; box-shadow: 0 0 4px theme('colors.secondary'); }
   }
 }
